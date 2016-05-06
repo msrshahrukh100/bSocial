@@ -22,79 +22,31 @@ Last login {{ user.last_login|timesince }} ago
 {% block content %}  
 
 <h3 class="center-align">Welcome {{ user.name }}  </h3>
-<h6 class="center-align">Select a lawyer from below for requesting an appointment</h6>
-
-<div class="row">
-<form action="" method='POST' onsubmit="return false" style="padding-bottom:90px" class="col s10 offset-s2">{% csrf_token %}
-	{% for lawyer in lawyers %}
-    <p>
-      <input name="lawyer" type="radio" id="{{ lawyer.id }}" value="{{ lawyer.id }}" />
-      <label for="{{ lawyer.id }}">Name: {{ lawyer.name }} &nbsp Email Id: {{ lawyer.email }}  &nbsp {% if lawyer.startdate and lawyer.enddate %}available from {{ lawyer.startdate }}&nbsp to {{ lawyer.enddate }}&nbsp{% endif %}</label>
-    </p>
-    {% endfor %}
-
-     	<div class="row">
-        <div class="input-field col s6">
-          
-          <textarea id="icon_prefix2" class="materialize-textarea" name="description"></textarea>
-          <label for="icon_prefix2">Description</label>
-        </div>
-      </div>
-      <div class="input-field col s6">
- <input type="date" id="appdate" class="datepicker" name = "date">
- <label for="appdate">Select a date for appointment</label>
-<button class="btn waves-effect waves-light" type="submit" id="submit" name="action">Send Request
-    <i class="material-icons right">send</i>
-  </button>
-</div>
-
-  <h5 id="bookerror"></h5>
-  </form>
-</div>
+<h6 class="center-align">Select the person you wish to chat with.Click on the image to start chatting</h6>
 
 
 <div class="row">
   <div class="col s10 offset-s1">
 <ul class="collection">
 
-  {% for r in bookingrequests %}
-  
-  {% if r.accepted %} 
-  
+    {% for u in users %}
     <li class="collection-item avatar">
-      <i class="material-icons circle green">insert_chart</i>
-      <span class="title">Description: {{ r.description }}</span>
-      <p>
-         Date of appointment: {{ r.date }}<br>
-         Status : Accepted
+      {% if u.image %}
+      <img src="{{ u.image.url }}" alt="" class="circle">
+      {% endif %}
+      <span class="title">{{ u.name }}</span>
+      <p>{{ u.email }} <br>
+         {{ u.address }}<br>
+         {{ u.phonenumber }}
       </p>
-
+      {% if u.online %}
+   <a href="#!" class="secondary-content"><i class="material-icons">grade</i>Online</a>   
+        {% else %}
+           <a href="#!" class="secondary-content">Offline</a>   
+      {% endif %}
     </li>
-
-    {% elif r.denied %}
-    <li class="collection-item avatar">
-      <i class="material-icons circle denied">insert_chart</i>
-      <span class="title">Description: {{ r.description }}</span>
-      <p>
-         Date of appointment: {{ r.date }}<br>
-         Status : Request Denied
-      </p>
-
-    </li>
-
-    {% else %}
-    <li class="collection-item avatar">
-      <i class="material-icons circle red">play_arrow</i>
-      <span class="title">Description: {{ r.description }}</span>
-      <p> 
-         Date of appointment: {{ r.date }}<br>
-         Status : Pending
-      </p>
-      
-    </li>
-    {% endif %}
     {% endfor %}
-   
+
   </ul>
   </div>
 </div>

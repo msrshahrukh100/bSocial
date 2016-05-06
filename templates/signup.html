@@ -16,7 +16,13 @@ Legistify|Home
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style type="text/css">
+#img {
+  max-height: 170px;
+  max-width: 120px;
+}
 
+</style>
 
 </head>
 <body>
@@ -74,7 +80,7 @@ Legistify|Home
 </ul>
 {% endif %}
 <div class="row">
-  <form method='POST' class="col s6"  action='' >{% csrf_token %}
+  <form method='POST' class="col s6"  action='' enctype = 'multipart/form-data'>{% csrf_token %}
 <div class="row">
   {% for field in form %}
         <div class="input-field col s12">    
